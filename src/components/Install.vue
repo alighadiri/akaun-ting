@@ -17,19 +17,21 @@
 										v-btn.pa-3.ma-3(color="primary" elevation="2" @click="langValidation") Next
 							v-stepper-content(step="2")
 								h1 Please provide your database information
-								v-text-field(label="Hostname" :rules="requiredRules" v-model="selectedDatabse.hostname" prepend-icon="mdi-server")
-								v-text-field(label="Username" v-model="selectedDatabse.username" prepend-icon="mdi-account")
-								v-text-field(label="Password" type="password" v-model="selectedDatabse.password" prepend-icon="mdi-key-variant")
-								v-text-field(label="Database" v-model="selectedDatabse.database" prepend-icon="mdi-database")
+								v-form(ref="database")
+									v-text-field(label="Hostname" :rules="requiredRules" v-model="selectedDatabse.hostname" prepend-icon="mdi-server")
+									v-text-field(label="Username" :rules="lengthRules" v-model="selectedDatabse.username" prepend-icon="mdi-account")
+									v-text-field(label="Password" :rules="lengthRules" type="password" v-model="selectedDatabse.password" prepend-icon="mdi-key-variant")
+									v-text-field(label="Database" :rules="requiredRules" v-model="selectedDatabse.database" prepend-icon="mdi-database")
 								div.d-flex.justify-end
 									v-btn.pa-3.ma-3(color="primary" elevation="2" @click="databaseValidation") Next
 								
 							v-stepper-content(step="3")
 								h1 Please provide your company information
-								v-text-field(label="Company Name" v-model="selectedAdmin.companyName" prepend-icon="mdi-domain")
-								v-text-field(label="Company Email" v-model="selectedAdmin.companyEmail" prepend-icon="mdi-email")
-								v-text-field(label="Admin Email" v-model="selectedAdmin.adminEmail" prepend-icon="mdi-email")
-								v-text-field(label="Admin Password" type="password" v-model="selectedAdmin.adminPassword" prepend-icon="mdi-key-variant")
+								v-form(ref="admin")
+									v-text-field(label="Company Name" :rules="requiredRules" v-model="selectedAdmin.companyName" prepend-icon="mdi-domain")
+									v-text-field(label="Company Email" :rules="emailRules" v-model="selectedAdmin.companyEmail" prepend-icon="mdi-email")
+									v-text-field(label="Admin Email" :rules="emailRules" v-model="selectedAdmin.adminEmail" prepend-icon="mdi-email")
+									v-text-field(label="Admin Password" :rules="lengthRules" type="password" v-model="selectedAdmin.adminPassword" prepend-icon="mdi-key-variant")
 								div.d-flex.justify-end
 									v-btn.pa-3.ma-3(color="primary" elevation="2" @click="adminValidation") Next
 								
@@ -57,6 +59,15 @@ export default {
         adminPassword: "",
       },
       requiredRules: [(value) => !!value || "Required."],
+      lengthRules: [(value) => !!value || "Required.", (value) => (value || "").length >= 6 || "Min 6 characters"],
+      emailRules: [
+        (value) => !!value || "Required.",
+        (value) => (value || "").length >= 6 || "Min 6 characters",
+        (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Invalid e-mail.";
+        },
+      ],
     };
   },
   methods: {
@@ -66,10 +77,15 @@ export default {
       }
     },
     databaseValidation() {
-      console.log(this.selectedDatabse);
-      this.step = 3;
+      if (this.$refs.database.validate()) {
+        this.step = 3;
+      }
     },
-    adminValidation() {},
+    adminValidation() {
+			if (this.$refs.admin.validate()) {
+				this.$router.push({ path: '/login' })	
+			}
+		},
   },
 };
 </script>
