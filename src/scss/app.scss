@@ -5,11 +5,32 @@
   margin: 0;
   padding: 0;
   outline: 0;
+  a:link {
+    text-decoration: none;
+  }
 }
+
 h1 {
   font-size: 18px;
 }
 
 h3 {
   font-size: 15px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .25s;
+}
+
+.fade-enter-active {
+  transition-delay: .25s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+
+.card-desc {
+  width: 100% ;
 }

@@ -39,70 +39,103 @@
 							
 
 					v-stepper-content(step="4")
-
-			
+						h1 Recommended Apps
+						div.d-flex.justify-space-between
+							a(v-for="app in apps" :href="app.link" target="_blank")
+								v-card.mx-auto.my-12(max-width='200')
+									v-img(height='120' :src="require('@/assets/' + app.pic)")
+									v-card-title {{app.name}}
+									v-card-text
+										v-row.mx-0(align='center')
+											div.card-desc.d-flex.justify-space-between
+												v-rating(:value='app.rate' color='amber' dense half-increments readonly size='14')
+												span {{app.price}}$
+						div.d-flex.justify-space-between
+							v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(3)") Previous
+							v-btn.pa-3.ma-3(color="primary" elevation="2") Go To Dashboard			
+				
 </template>
 
 <script>
-
 import CurrencyTable from "./wizard-components/CurrencyTable";
-import TaxTable from "./wizard-components/TaxTable"
+import TaxTable from "./wizard-components/TaxTable";
 
 export default {
-	name: "Wizard",
-	components: {
-		CurrencyTable,
-		TaxTable
-	},
-	data() {
-		return {
-			step: 1,
-			menu: "",
-			date: "",
-			companyInfo: {
-				api: "",
-				taxNo: "",
-				yearStart: "",
-				address: "",
-				logo: null,
-			},
-			currencies: [
-				{
-					name: "British Pound",
-					code: "GBP",
-					rate: 1.6,
-					enabled: true,
-				},
-				{
-					name: "Euro",
-					code: "EUR",
-					rate: 1.25,
-					enabled: true,
-				},
-				{
-					name: "Turkish Lira",
-					code: "TRY",
-					rate: 0.8,
-					enabled: true,
-				},
-				{
-					name: "US Dollar",
-					code: "USD",
-					rate: 1,
-					enabled: true,
-				},
-				
-			],
-		};
-	},
+  name: "Wizard",
+  components: {
+    CurrencyTable,
+    TaxTable,
+  },
+  data() {
+    return {
+      step: 1,
+      menu: "",
+      date: "",
+      companyInfo: {
+        api: "",
+        taxNo: "",
+        yearStart: "",
+        address: "",
+        logo: null,
+      },
+      currencies: [
+        {
+          name: "British Pound",
+          code: "GBP",
+          rate: 1.6,
+          enabled: true,
+        },
+        {
+          name: "Euro",
+          code: "EUR",
+          rate: 1.25,
+          enabled: true,
+        },
+        {
+          name: "Turkish Lira",
+          code: "TRY",
+          rate: 0.8,
+          enabled: true,
+        },
+        {
+          name: "US Dollar",
+          code: "USD",
+          rate: 1,
+          enabled: true,
+        },
+      ],
+      apps: [
+        {
+          name: "Documents",
+          rate: 5,
+          price: 39,
+          pic: "1.png",
+          link: "https://akaunting.com/apps/documents",
+        },
+        {
+          name: "ToDo",
+          rate: 4,
+          price: 19,
+          pic: "3.png",
+          link: "https://akaunting.com/apps/todo",
+        },
+        {
+          name: "White Label",
+          rate: 4.5,
+          price: 299,
+          pic: "2.png",
+          link: "https://akaunting.com/apps/white-label",
+        },
+      ],
+    };
+  },
 
+  computed: {},
 
-	computed: {},
-
-	methods: {
-		navigation(n) {
-			this.step = n;
-		},
-	},
+  methods: {
+    navigation(n) {
+      this.step = n;
+    },
+  },
 };
 </script>

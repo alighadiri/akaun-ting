@@ -1,6 +1,7 @@
 <template lang="pug">
 	v-app
-		router-view 
+		transition(name="fade")
+			router-view 
 </template>
 
 <script>
