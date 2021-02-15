@@ -4,8 +4,8 @@
 			v-sheet.col-8(color="white" elevation="1" rounded)
 				h1 Login to start your session
 				v-form(ref="login")
-					v-text-field(label="Email" :rules="emailRules" v-model="enteredLoginData.email")
-					v-text-field(label="Password" :rules="passwordRules" type="password" v-model="enteredLoginData.password")
+					v-text-field(label="Email" :rules="emailRules" v-model="enteredLoginData.email" prepend-icon="mdi-email")
+					v-text-field(label="Password" :rules="passwordRules" type="password" v-model="enteredLoginData.password" prepend-icon="mdi-lock-open")
 					v-checkbox(label="Remember Me!" v-model="enteredLoginData.rememberMe")
 					div.d-flex.justify-end
 						v-btn.pa-3.ma-3(color="success" elevation="2" @click="submit") Login

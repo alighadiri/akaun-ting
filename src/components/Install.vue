@@ -15,6 +15,7 @@
 								v-select(:items='languages' :rules="requiredRules" v-model="selectedLang" label='Languages')
 								div.d-flex.justify-end
 									v-btn.pa-3.ma-3(color="primary" elevation="2" @click="langValidation") Next
+                  
 						v-stepper-content(step="2")
 							h1 Please provide your database information
 							v-form(ref="database")
