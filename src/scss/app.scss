@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
-
 * {
   font-family: "Ubuntu", sans-serif;
   margin: 0;
@@ -10,6 +9,22 @@
   }
 }
 
+#app {
+  background-color: #55588b;
+  .wrapper {
+    height: 100%;
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+::-webkit-scrollbar {
+  width: 0px !important;
+}
+
 h1 {
   font-size: 18px;
 }
@@ -18,19 +33,32 @@ h3 {
   font-size: 15px;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition-property: opacity;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
 }
 
 .fade-enter-active {
-  transition-delay: .25s;
+  transition-delay: 0.25s;
 }
 
-.fade-enter, .fade-leave-active {
-  opacity: 0
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 
 .card-desc {
-  width: 100% ;
+  width: 100%;
+}
+
+.v-stepper:not(.v-stepper--vertical) .v-stepper__label {
+  display: block !important;
+}
+.v-stepper__step {
+  padding: 24px 0 !important;
+}
+
+.v-stepper__label {
+  font-size: 14px;
 }

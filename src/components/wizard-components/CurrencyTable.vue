@@ -1,11 +1,9 @@
 <template lang="pug">
-	v-app
+	div.wrapper
 		v-data-table.elevation-1(:headers='headers' :items='currencies' sort-by='name')
 			template(v-slot:top='')
 				v-toolbar(flat='')
-					v-toolbar-title Currencies
-					v-divider.mx-4(inset='' vertical='')
-					v-spacer
+
 					v-dialog(v-model='dialog' max-width='500px')
 						template(v-slot:activator='{ on, attrs }')
 							v-btn.mb-2(color='primary' dark='' v-bind='attrs' v-on='on')
@@ -168,8 +166,8 @@ export default {
     },
 
     currencyPush() {
-      this.$store.commit("updateWizardInfo", this.currencies);
-			this.$emit('nav', 3)
+      this.$store.commit("updateWizardInfo", { currencies: this.currencies });
+      this.$emit("nav", 3);
     },
   },
 };

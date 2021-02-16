@@ -1,8 +1,8 @@
 <template lang="pug">
-	v-app
-		v-container
-			v-sheet.col-8(color="white" elevation="1" rounded)
-				h1 Login to start your session
+	div.wrapper
+		v-container.d-flex.justify-center.align-center.h-100
+			v-sheet.col-12.col-sm-6(color="white" elevation="1" rounded)
+				h1.text-center.pt-3 Login to start your session
 				v-form(ref="login")
 					v-text-field(label="Email" :rules="emailRules" v-model="email" prepend-icon="mdi-email")
 					v-text-field(label="Password" :rules="passwordRules" type="password" v-model="password" prepend-icon="mdi-lock-open")
@@ -35,10 +35,10 @@ export default {
         let loginInfo = {
           loginEmail: this.email,
           loginPassword: this.password,
-          loginRememberMe: this.rememberMe
+          loginRememberMe: this.rememberMe,
         };
         this.$store.commit("updateLoginInfo", loginInfo);
-				this.$router.push({ path: '/wizard' });
+        this.$router.push({ path: "/wizard" });
       }
     },
   },

@@ -9,6 +9,7 @@ export default new Vuex.Store({
     loginInfo: {},
     wizardInfo: {},
   },
+
   mutations: {
     updateInstallInfo(state, details) {
       Object.assign(state.installInfo, details);
@@ -20,6 +21,8 @@ export default new Vuex.Store({
       Object.assign(state.wizardInfo, details);
     },
   },
+
   actions: {},
+
   modules: {},
 });

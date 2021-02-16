@@ -1,23 +1,23 @@
 <template lang="pug">
-	v-app
-		v-container 
-			v-col.col-8
+	div.wrapper
+		v-container
+			v-col.col-12.col-sm-8.mx-auto.px-0
 				v-stepper(v-model="step" alt-labels)
-					v-stepper-header
+					v-stepper-header.flex-nowrap
 						v-stepper-step(step="1" :editable="step > 0") Language
 						v-stepper-step(step="2" :editable="step > 1") Database
 						v-stepper-step(step="3" :editable="step > 2") Admin
 					
 					v-stepper-items
 						v-stepper-content(step="1")
-							h1 Please select your language
+							h1.mb-5.text-center Please select your language
 							v-form(ref="language")
 								v-select(:items='languages' :rules="requiredRules" v-model="selectedLang" label='Languages')
 								div.d-flex.justify-end
 									v-btn.pa-3.ma-3(color="success" elevation="2" @click="langValidation") Next
-                  
+									
 						v-stepper-content(step="2")
-							h1 Please provide your database information
+							h1.mb-5.text-center Please provide your database information
 							v-form(ref="database")
 								v-text-field(label="Hostname" :rules="requiredRules" v-model="selectedDatabase.hostname" prepend-icon="mdi-server")
 								v-text-field(label="Username" :rules="lengthRules" v-model="selectedDatabase.username" prepend-icon="mdi-account")
@@ -27,7 +27,7 @@
 								v-btn.pa-3.ma-3(color="success" elevation="2" @click="databaseValidation") Next
 							
 						v-stepper-content(step="3")
-							h1 Please provide your company information
+							h1.mb-5.text-center Please provide your company information
 							v-form(ref="admin")
 								v-text-field(label="Company Name" :rules="requiredRules" v-model="selectedAdmin.companyName" prepend-icon="mdi-domain")
 								v-text-field(label="Company Email" :rules="emailRules" v-model="selectedAdmin.companyEmail" prepend-icon="mdi-email")
@@ -85,9 +85,9 @@ export default {
         let installInfo = {
           langInfo: this.selectedLang,
           databaseInfo: this.selectedDatabase,
-          adminInfo: this.selectedAdmin
+          adminInfo: this.selectedAdmin,
         };
-        this.$store.commit("updateInstallInfo", installInfo)
+        this.$store.commit("updateInstallInfo", installInfo);
         this.$router.push({ path: "/login" });
       }
     },
