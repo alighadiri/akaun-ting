@@ -15,27 +15,27 @@
 						v-form
 							v-text-field(label="API Key" v-model="companyInfo.api" prepend-icon="mdi-key")
 							v-text-field(label="Tax Number" v-model="companyInfo.taxNo" prepend-icon="mdi-percent")
-							v-menu(v-model="menu" ref="menu" :close-on-content-click="true" :return-value.sync="date" transition="scale-transition" offset-y min-width="auto")
+							v-menu(v-model="menu" ref="menu" :close-on-content-click="true" :return-value.sync="companyInfo.yearStart" transition="scale-transition" offset-y min-width="auto")
 								template(v-slot:activator="{ on, attrs }")
-									v-text-field(label="Financial Year Start" readonly v-bind="attrs" v-on="on" v-model="date" prepend-icon="mdi-calendar")
-								v-date-picker(v-model="date" no-title @change="$refs.menu.save(date)")
+									v-text-field(label="Financial Year Start" readonly v-bind="attrs" v-on="on" v-model="companyInfo.yearStart" prepend-icon="mdi-calendar")
+								v-date-picker(v-model="companyInfo.yearStart" no-title @change="$refs.menu.save(companyInfo.yearStart)")
 							v-textarea(label="Address" v-model="companyInfo.address" outlined prepend-icon="mdi-map-marker")
 							v-file-input(label="Logo" v-model="companyInfo.logo" chips)
 
 						div.d-flex.justify-end
-							v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(2)") Next
+							v-btn.pa-3.ma-3(color="success" elevation="2" @click="companyPush") Next
 
 					v-stepper-content(step="2")
-						CurrencyTable.mb-0
-						div.d-flex.justify-space-between
-							v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(1)") Previous
-							v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(3)") Next
+						CurrencyTable(@nav="navigation")
+						//- div.d-flex.justify-space-between
+						//- 	v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(1)") Previous
+						//- 	v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(3)") Next
 
 					v-stepper-content(step="3")
-						TaxTable
-						div.d-flex.justify-space-between
-							v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(2)") Previous
-							v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(4)") Next
+						TaxTable(@nav="navigation")
+						//- div.d-flex.justify-space-between
+						//- 	v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(2)") Previous
+						//- 	v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(4)") Next
 							
 
 					v-stepper-content(step="4")
@@ -51,8 +51,8 @@
 												v-rating(:value='app.rate' color='amber' dense half-increments readonly size='14')
 												span {{app.price}}$
 						div.d-flex.justify-space-between
-							v-btn.pa-3.ma-3(color="primary" elevation="2" @click="navigation(3)") Previous
-							v-btn.pa-3.ma-3(color="primary" elevation="2") Go To Dashboard			
+							v-btn.pa-3.ma-3(color="secondary" elevation="2" @click="navigation(3)") Previous
+							v-btn.pa-3.ma-3(color="success" elevation="2" @click="logData") Go To Dashboard			
 				
 </template>
 
@@ -70,7 +70,6 @@ export default {
     return {
       step: 1,
       menu: "",
-      date: "",
       companyInfo: {
         api: "",
         taxNo: "",
@@ -78,32 +77,6 @@ export default {
         address: "",
         logo: null,
       },
-      currencies: [
-        {
-          name: "British Pound",
-          code: "GBP",
-          rate: 1.6,
-          enabled: true,
-        },
-        {
-          name: "Euro",
-          code: "EUR",
-          rate: 1.25,
-          enabled: true,
-        },
-        {
-          name: "Turkish Lira",
-          code: "TRY",
-          rate: 0.8,
-          enabled: true,
-        },
-        {
-          name: "US Dollar",
-          code: "USD",
-          rate: 1,
-          enabled: true,
-        },
-      ],
       apps: [
         {
           name: "Documents",
@@ -133,9 +106,20 @@ export default {
   computed: {},
 
   methods: {
+
     navigation(n) {
       this.step = n;
     },
+
+    companyPush() {
+      this.$store.commit("updateWizardInfo" , this.companyInfo)
+      this.step = 2
+    },
+
+    logData() {
+      let data = this.$store.state;
+      console.log(data)
+    }
   },
 };
 </script>

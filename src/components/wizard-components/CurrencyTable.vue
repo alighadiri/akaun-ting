@@ -44,6 +44,9 @@
 					| mdi-pencil
 				v-icon(small='' @click='deleteItem(item)')
 					| mdi-delete
+		div.d-flex.justify-space-between
+			v-btn.pa-3.ma-3(color="secondary" elevation="2" @click="$emit('nav', 1)") Previous
+			v-btn.pa-3.ma-3(color="success" elevation="2" @click="currencyPush") Next
 
 </template>
 
@@ -102,7 +105,7 @@ export default {
       name: "",
       code: "",
       rate: "",
-			enabled: true
+      enabled: true,
     },
   }),
 
@@ -162,6 +165,11 @@ export default {
         this.currencies.push(this.editedItem);
       }
       this.close();
+    },
+
+    currencyPush() {
+      this.$store.commit("updateWizardInfo", this.currencies);
+			this.$emit('nav', 3)
     },
   },
 };

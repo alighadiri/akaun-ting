@@ -42,97 +42,104 @@
 					| mdi-pencil
 				v-icon(small='' @click='deleteItem(item)')
 					| mdi-delete
-
+		div.d-flex.justify-space-between
+			v-btn.pa-3.ma-3(color="secondary" elevation="2" @click="$emit('nav', 2)") Previous
+			v-btn.pa-3.ma-3(color="success" elevation="2" @click="taxPush") Next
 </template>
 
 <script>
 export default {
-  name: "TaxTable",
-  data: () => ({
-    dialog: false,
-    dialogDelete: false,
-    headers: [
-      {
-        text: "Name",
-        align: "start",
-        sortable: true,
-        value: "name",
-      },
-      { text: "Rate", value: "rate" },
-      { text: "Enabled", value: "enabled", sortable: false },
-      { text: "Actions", value: "actions", sortable: false },
-    ],
-    taxes: [],
-    editedIndex: -1,
-    editedItem: {
-      name: "",
-      rate: "",
-      enabled: true,
-    },
-    defaultItem: {
-      name: "",
-      rate: "",
+	name: "TaxTable",
+	data: () => ({
+		dialog: false,
+		dialogDelete: false,
+		headers: [
+			{
+				text: "Name",
+				align: "start",
+				sortable: true,
+				value: "name",
+			},
+			{ text: "Rate", value: "rate" },
+			{ text: "Enabled", value: "enabled", sortable: false },
+			{ text: "Actions", value: "actions", sortable: false },
+		],
+		taxes: [],
+		editedIndex: -1,
+		editedItem: {
+			name: "",
+			rate: "",
+			enabled: true,
+		},
+		defaultItem: {
+			name: "",
+			rate: "",
 			enabled: true
-    },
-  }),
+		},
+	}),
 
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? "New Tax" : "Edit Tax";
-    },
-  },
+	computed: {
+		formTitle() {
+			return this.editedIndex === -1 ? "New Tax" : "Edit Tax";
+		},
+	},
 
-  watch: {
-    dialog(val) {
-      val || this.close();
-    },
-    dialogDelete(val) {
-      val || this.closeDelete();
-    },
-  },
+	watch: {
+		dialog(val) {
+			val || this.close();
+		},
+		dialogDelete(val) {
+			val || this.closeDelete();
+		},
+	},
 
-  methods: {
-    editItem(item) {
-      this.editedIndex = this.taxes.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
+	methods: {
+		editItem(item) {
+			this.editedIndex = this.taxes.indexOf(item);
+			this.editedItem = Object.assign({}, item);
+			this.dialog = true;
+		},
 
-    deleteItem(item) {
-      this.editedIndex = this.taxes.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true;
-    },
+		deleteItem(item) {
+			this.editedIndex = this.taxes.indexOf(item);
+			this.editedItem = Object.assign({}, item);
+			this.dialogDelete = true;
+		},
 
-    deleteItemConfirm() {
-      this.taxes.splice(this.editedIndex, 1);
-      this.closeDelete();
-    },
+		deleteItemConfirm() {
+			this.taxes.splice(this.editedIndex, 1);
+			this.closeDelete();
+		},
 
-    close() {
-      this.dialog = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
+		close() {
+			this.dialog = false;
+			this.$nextTick(() => {
+				this.editedItem = Object.assign({}, this.defaultItem);
+				this.editedIndex = -1;
+			});
+		},
 
-    closeDelete() {
-      this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
+		closeDelete() {
+			this.dialogDelete = false;
+			this.$nextTick(() => {
+				this.editedItem = Object.assign({}, this.defaultItem);
+				this.editedIndex = -1;
+			});
+		},
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.taxes[this.editedIndex], this.editedItem);
-      } else {
-        this.taxes.push(this.editedItem);
-      }
-      this.close();
-    },
-  },
+		save() {
+			if (this.editedIndex > -1) {
+				Object.assign(this.taxes[this.editedIndex], this.editedItem);
+			} else {
+				this.taxes.push(this.editedItem);
+			}
+			this.close();
+		},
+
+		taxPush() {
+			this.$store.commit("updateWizardInfo", this.taxes);
+			this.$emit('nav', 4)
+		}
+	},
 };
 </script>

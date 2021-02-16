@@ -14,17 +14,17 @@
 							v-form(ref="language")
 								v-select(:items='languages' :rules="requiredRules" v-model="selectedLang" label='Languages')
 								div.d-flex.justify-end
-									v-btn.pa-3.ma-3(color="primary" elevation="2" @click="langValidation") Next
+									v-btn.pa-3.ma-3(color="success" elevation="2" @click="langValidation") Next
                   
 						v-stepper-content(step="2")
 							h1 Please provide your database information
 							v-form(ref="database")
-								v-text-field(label="Hostname" :rules="requiredRules" v-model="selectedDatabse.hostname" prepend-icon="mdi-server")
-								v-text-field(label="Username" :rules="lengthRules" v-model="selectedDatabse.username" prepend-icon="mdi-account")
-								v-text-field(label="Password" type="password" v-model="selectedDatabse.password" prepend-icon="mdi-key-variant")
-								v-text-field(label="Database" :rules="requiredRules" v-model="selectedDatabse.database" prepend-icon="mdi-database")
+								v-text-field(label="Hostname" :rules="requiredRules" v-model="selectedDatabase.hostname" prepend-icon="mdi-server")
+								v-text-field(label="Username" :rules="lengthRules" v-model="selectedDatabase.username" prepend-icon="mdi-account")
+								v-text-field(label="Password" type="password" v-model="selectedDatabase.password" prepend-icon="mdi-key-variant")
+								v-text-field(label="Database" :rules="requiredRules" v-model="selectedDatabase.database" prepend-icon="mdi-database")
 							div.d-flex.justify-end
-								v-btn.pa-3.ma-3(color="primary" elevation="2" @click="databaseValidation") Next
+								v-btn.pa-3.ma-3(color="success" elevation="2" @click="databaseValidation") Next
 							
 						v-stepper-content(step="3")
 							h1 Please provide your company information
@@ -34,7 +34,7 @@
 								v-text-field(label="Admin Email" :rules="emailRules" v-model="selectedAdmin.adminEmail" prepend-icon="mdi-email")
 								v-text-field(label="Admin Password" :rules="lengthRules" type="password" v-model="selectedAdmin.adminPassword" prepend-icon="mdi-key-variant")
 							div.d-flex.justify-end
-								v-btn.pa-3.ma-3(color="primary" elevation="2" @click="adminValidation") Next
+								v-btn.pa-3.ma-3(color="success" elevation="2" @click="adminValidation") Next
 							
 </template>
 
@@ -46,17 +46,17 @@ export default {
       step: 1,
       languages: ["English", "Arabic", "Turkish", "Persian", "French", "Spanish"],
       selectedLang: "",
-      selectedDatabse: {
-        hostname: "",
-        username: "",
-        password: "",
-        database: "",
+      selectedDatabase: {
+        hostname: "ali",
+        username: "alighadiri",
+        password: "12345678",
+        database: "ali",
       },
       selectedAdmin: {
-        companyName: "",
-        companyEmail: "",
-        adminEmail: "",
-        adminPassword: "",
+        companyName: "Ali",
+        companyEmail: "ali@ali.com",
+        adminEmail: "ali@ali.com",
+        adminPassword: "12345678",
       },
       requiredRules: [(value) => !!value || "Required."],
       lengthRules: [(value) => !!value || "Required.", (value) => (value || "").length >= 6 || "Min 6 characters"],
@@ -82,6 +82,12 @@ export default {
     },
     adminValidation() {
       if (this.$refs.admin.validate()) {
+        let installInfo = {
+          langInfo: this.selectedLang,
+          databaseInfo: this.selectedDatabase,
+          adminInfo: this.selectedAdmin
+        };
+        this.$store.commit("updateInstallInfo", installInfo)
         this.$router.push({ path: "/login" });
       }
     },
