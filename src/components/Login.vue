@@ -19,6 +19,7 @@ export default {
       email: "",
       password: "",
       rememberMe: false,
+      // defining rules for validating the user data in login form
       emailRules: [
         (value) => !!value || "Required.",
         (value) => {
@@ -31,6 +32,7 @@ export default {
   },
   methods: {
     submit() {
+      // sending data to store if the inputed data are valid
       if (this.$refs.login.validate()) {
         let loginInfo = {
           loginEmail: this.email,

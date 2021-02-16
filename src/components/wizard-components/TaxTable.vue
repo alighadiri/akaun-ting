@@ -1,6 +1,6 @@
 <template lang="pug">
 	div.wrapper
-		v-data-table.elevation-1(:headers='headers' :items='taxes' sort-by='name')
+		v-data-table.elevation-1(:headers='headers' :items='taxes')
 			template(v-slot:top='')
 				v-toolbar(flat='')
 					v-dialog(v-model='dialog' max-width='500px')
@@ -134,6 +134,7 @@ export default {
     },
 
     taxPush() {
+      // converting data from array to object and sending them to store
       this.$store.commit("updateWizardInfo", { taxes: this.taxes });
       this.$emit("nav", 4);
     },

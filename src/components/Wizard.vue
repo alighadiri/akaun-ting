@@ -10,7 +10,6 @@
 						v-stepper-step(step="4" :editable="step > 3") Finish
 	
 					v-stepper-items
-
 						v-stepper-content(step="1")
 
 							v-form
@@ -22,7 +21,6 @@
 									v-date-picker(v-model="companyInfo.yearStart" width="250px" no-title @change="$refs.menu.save(companyInfo.yearStart)")
 								v-textarea(label="Address" v-model="companyInfo.address" outlined prepend-icon="mdi-map-marker")
 								v-file-input(label="Logo" v-model="companyInfo.logo" chips)
-
 							div.d-flex.justify-end
 								v-btn.pa-3.ma-3(color="success" elevation="2" @click="companyPush") Next
 
@@ -101,15 +99,17 @@ export default {
   computed: {},
 
   methods: {
+    // method for navigating between steps
     navigation(n) {
       this.step = n;
     },
-
+    // sending data to store
     companyPush() {
       this.$store.commit("updateWizardInfo", { companyInfo: this.companyInfo });
       this.step = 2;
     },
-
+    /* recieving all the data taken from the user from store and 
+    logging  in console by pressing Go To Dashboard button */
     logData() {
       let data = this.$store.state;
       console.log(data);

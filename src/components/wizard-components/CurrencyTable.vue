@@ -166,6 +166,7 @@ export default {
     },
 
     currencyPush() {
+      // converting data from array to object and sending them to store
       this.$store.commit("updateWizardInfo", { currencies: this.currencies });
       this.$emit("nav", 3);
     },

@@ -47,17 +47,18 @@ export default {
       languages: ["English", "Arabic", "Turkish", "Persian", "French", "Spanish"],
       selectedLang: "",
       selectedDatabase: {
-        hostname: "ali",
-        username: "alighadiri",
-        password: "12345678",
-        database: "ali",
+        hostname: "",
+        username: "",
+        password: "",
+        database: "",
       },
       selectedAdmin: {
-        companyName: "Ali",
-        companyEmail: "ali@ali.com",
-        adminEmail: "ali@ali.com",
-        adminPassword: "12345678",
+        companyName: "",
+        companyEmail: "",
+        adminEmail: "",
+        adminPassword: "",
       },
+      // Defining rules for validating the data taken from user
       requiredRules: [(value) => !!value || "Required."],
       lengthRules: [(value) => !!value || "Required.", (value) => (value || "").length >= 6 || "Min 6 characters"],
       emailRules: [
@@ -70,6 +71,7 @@ export default {
     };
   },
   methods: {
+    // validating input data in every step
     langValidation() {
       if (this.$refs.language.validate()) {
         this.step = 2;
@@ -81,6 +83,7 @@ export default {
       }
     },
     adminValidation() {
+      // sending data to store if the inputed data are valid
       if (this.$refs.admin.validate()) {
         let installInfo = {
           langInfo: this.selectedLang,
